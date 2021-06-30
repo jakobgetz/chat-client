@@ -1,0 +1,19 @@
+version: 2.1
+
+jobs:
+  - test:
+      docker:
+        -image: cimg/node:16.4.0
+      steps:
+        - checkout
+        - run:
+            name: Install Dependencies
+            command: npm install
+        - run:
+            name: Run Test
+            command: npm run test-ci
+
+workflow:
+  test:
+    jobs:
+      - test
