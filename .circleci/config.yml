@@ -19,7 +19,7 @@ jobs:
             name: Run Test
             command: npm run test-ci
 
-workflow:
+workflows:
   test:
     jobs:
       - test
