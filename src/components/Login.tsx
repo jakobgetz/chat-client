@@ -4,6 +4,7 @@ import basicReducer, { ACTIONS } from "../state";
 type Props = {
   dispatch: Dispatch<any>;
 };
+
 const Login: React.FC<Props> = ({ dispatch }) => {
   const idRef = useRef<HTMLInputElement>(null);
 
