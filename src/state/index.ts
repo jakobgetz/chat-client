@@ -1,25 +1,28 @@
-import { Reducer } from "react";
+import { combineReducers, createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
+import { basicReducer } from "./basic";
 
-type TState = {
-  id?: string;
-};
+export type InitialState = object;
+export const initialState: InitialState = {};
 
-type TAction = {
-  type: string;
-  payload?: any;
-};
+const reducer = combineReducers({
+  basic: basicReducer,
+});
 
-export const ACTIONS = {
-  CHANGE_ID: "CHANGE_ID",
-};
+const key = "whatsapp-chat-clone";
+const localState = localStorage.getItem(key);
+const state = localState ? JSON.parse(localState) : initialState;
 
-const basicReducer: Reducer<TState, TAction> = (state: TState, action: TAction) => {
-  switch (action.type) {
-    case ACTIONS.CHANGE_ID:
-      return { id: action.payload };
-    default:
-      return state;
-  }
-};
+export const store = createStore(
+  reducer,
+  state,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
-export default basicReducer;
+store.subscribe(() => {
+  localStorage.setItem(key, JSON.stringify(store.getState()));
+});
+
+export type TState = ReturnType<typeof reducer>;
+export * from "./basic";
