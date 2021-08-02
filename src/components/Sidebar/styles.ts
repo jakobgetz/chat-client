@@ -15,4 +15,9 @@ export const useStyles = makeStyles({
   id: {
     margin: 5,
   },
+  closeButton: {
+    position: "absolute",
+    top: 3,
+    right: 3,
+  },
 });
