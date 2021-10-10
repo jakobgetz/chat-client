@@ -4,3 +4,6 @@ export * from "./Dashboard";
 export * from "./Sidebar";
 export * from "./Conversations";
 export * from "./Contacts";
+export * from "./NewContactDialogue";
+export * from "./NewConversationDialogue";
+export * from "./Chat";

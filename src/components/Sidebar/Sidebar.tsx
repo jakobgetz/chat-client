@@ -21,10 +21,14 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
-import { Contacts, Conversations } from "../";
+import {
+  Contacts,
+  Conversations,
+  NewContactDialogue,
+  NewConversationDialogue,
+} from "../";
 import { useStyles } from "./styles";
 import { useState } from "react";
-import { TabPanel } from "@material-ui/lab";
 
 export const Sidebar = () => {
   const { id, activePage } = useSelector((state: TState) => state.basic);
@@ -50,28 +54,6 @@ export const Sidebar = () => {
             <Tab label="CONTACTS" />
           </Tabs>
         </AppBar>
-        {/* <ButtonGroup fullWidth>
-          <Button
-            className={classes.navButton}
-            size="large"
-            onClick={() => dispatch(toggleActivePage(CONVERSATIONS_KEY))}
-            color="primary"
-            variant={
-              activePage === CONVERSATIONS_KEY ? "contained" : "outlined"
-            }
-          >
-            Conversations
-          </Button>
-          <Button
-            className={classes.navButton}
-            size="large"
-            onClick={() => dispatch(toggleActivePage(CONTACTS_KEY))}
-            color="primary"
-            variant={activePage === CONTACTS_KEY ? "contained" : "outlined"}
-          >
-            Contacts
-          </Button>
-        </ButtonGroup> */}
         {activeTab === 0 ? <Conversations /> : <Contacts />}
 
         <Container className={classes.footer}>
@@ -94,19 +76,15 @@ export const Sidebar = () => {
           </Button>
         </Container>
       </Drawer>
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <DialogTitle>Add Contact</DialogTitle>
-        <IconButton
-          aria-label="close"
-          className={classes.closeButton}
-          onClick={() => setDialogOpen(false)}
-        >
-          <CloseIcon />
-        </IconButton>
-        <form>
-          <input type="text" />
-        </form>
-      </Dialog>
+      {setDialogOpen && (
+        <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+          {activeTab === 0 ? (
+            <NewConversationDialogue closeDialog={() => setDialogOpen(false)} />
+          ) : (
+            <NewContactDialogue />
+          )}
+        </Dialog>
+      )}
     </>
   );
 };

@@ -1,6 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeId, TState } from "../../state";
+import {
+  changeId,
+  loadContacts,
+  ToggleActivePagePayload,
+  TState,
+} from "../../state";
 import { v4 as uuidv4 } from "uuid";
 import { Button, Container, TextField, Typography } from "@material-ui/core";
 import { useStyles } from "./styles";
@@ -8,7 +13,9 @@ import { useStyles } from "./styles";
 export const Login: React.FC = () => {
   const idRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
-  const activePage = useSelector((state: TState) => state.basic.activePage);
+  const activePage: ToggleActivePagePayload = useSelector(
+    (state: TState) => state.basic.activePage
+  );
   const classes = useStyles();
 
   useEffect(() => {
@@ -25,6 +32,8 @@ export const Login: React.FC = () => {
   const createNewId = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(changeId(uuidv4()));
+    // temporary
+    dispatch(loadContacts());
   };
 
   return (
