@@ -56,13 +56,19 @@ export const basicReducer = (
     case APPEND_MESSAGE:
       return {
         ...state,
-        contacts: state.contacts?.map((contact) =>
-          contact.id === action.payload.recipient
+        contacts: state.contacts?.map((contact) => {
+          if (action.payload.outGoing) {
+            return contact.id === action.payload.recipient
+              ? { ...contact, chat: contact.chat?.concat(action.payload) }
+              : contact;
+          }
+          return contact.id === action.payload.sender
             ? { ...contact, chat: contact.chat?.concat(action.payload) }
-            : contact
-        ),
+            : contact;
+        }),
       };
     case SET_SOCKET:
+      console.log(action.payload);
       return { ...state, socket: action.payload };
     default:
       return state;

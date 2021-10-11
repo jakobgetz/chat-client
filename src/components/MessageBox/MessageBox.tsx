@@ -17,13 +17,23 @@ export const MessageBox = () => {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
 
-  //@ts-ignore
   useEffect(() => {
     if (socket) {
-      socket.on("receive-message", (message) =>
-        dispatch(appendMessage(message))
-      );
-      return () => socket.off("receive-message");
+      socket.on("receive-message", (message: any) => {
+        dispatch(
+          appendMessage(
+            new Message(
+              message.message,
+              message.sender,
+              message.recipient,
+              false
+            )
+          )
+        );
+      });
+      return () => {
+        socket.off("receive-message");
+      };
     }
   }, [socket]);
 
@@ -35,7 +45,7 @@ export const MessageBox = () => {
         id,
         contacts.filter((contact) => contact.selectedToChat && contact)[0].id
       );
-      // socket.emit("send-message", message);
+      socket.emit("send-message", message);
       dispatch(appendMessage(message));
       setText("");
     }

@@ -1,4 +1,5 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
+import _ from "lodash";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { basicReducer } from "./basic";
@@ -10,18 +11,18 @@ const reducer = combineReducers({
   basic: basicReducer,
 });
 
-const key = "whatsapp-chat-clone";
+const key = "whatsapp-clone-app";
 const localState = localStorage.getItem(key);
 const state = localState ? JSON.parse(localState) : initialState;
 
 export const store = createStore(
   reducer,
-  state,
+  initialState,
   composeWithDevTools(applyMiddleware(thunk))
 );
 
 store.subscribe(() => {
-  const state = store.getState();
+  const state = _.cloneDeep(store.getState());
   delete state.basic.socket;
   localStorage.setItem(key, JSON.stringify(state));
 });

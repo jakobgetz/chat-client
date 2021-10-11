@@ -11,11 +11,13 @@ export const Dashboard = () => {
   const socket: Socket = useSelector((state: TState) => state.basic.socket);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const newSocket = io("http://localhost:5000", { query: id });
-  //   dispatch(setSocket(newSocket));
-  //   return () => newSocket.close();
-  // }, [id, socket]);
+  useEffect(() => {
+    const newSocket = io("http://localhost:5000", { query: { id } });
+    dispatch(setSocket(newSocket));
+    return () => {
+      newSocket.close();
+    };
+  }, [id]);
 
   return (
     <div className={classes.root}>
