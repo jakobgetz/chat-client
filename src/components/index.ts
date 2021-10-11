@@ -7,4 +7,5 @@ export * from "./Contacts";
 export * from "./NewContactDialogue";
 export * from "./NewConversationDialogue";
 export * from "./Chat";
+export * from "./Message";
 export * from "./MessageBox";

@@ -8,4 +8,14 @@ export const useStyles = makeStyles({
     // borderRadius: "5px",
     // padding: "2px 10px 2px 10px ",
   },
+  footer: {
+    position: "absolute",
+    bottom: 0,
+    padding: "10px",
+    display: "flex",
+    alignItems: "center",
+  },
+  sendButton: {
+    margin: "10px",
+  },
 });

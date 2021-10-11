@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { io, Socket } from "socket.io-client";
 import { Sidebar, Chat } from "../";
+import { serverConfig } from "../../server.config";
 import { TState, setSocket } from "../../state";
 import { useStyles } from "./styles";
 
@@ -12,7 +13,7 @@ export const Dashboard = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const newSocket = io("http://localhost:5000", { query: { id } });
+    const newSocket = io(serverConfig.socket, { query: { id } });
     dispatch(setSocket(newSocket));
     return () => {
       newSocket.close();
