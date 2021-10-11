@@ -21,7 +21,9 @@ export const store = createStore(
 );
 
 store.subscribe(() => {
-  localStorage.setItem(key, JSON.stringify(store.getState()));
+  const state = store.getState();
+  delete state.basic.socket;
+  localStorage.setItem(key, JSON.stringify(state));
 });
 
 export type TState = ReturnType<typeof reducer>;

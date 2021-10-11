@@ -7,7 +7,8 @@ import {
 } from "@material-ui/core";
 import PermContactCalendarOutlinedIcon from "@material-ui/icons/PermContactCalendarOutlined";
 import { useDispatch, useSelector } from "react-redux";
-import { TState, Contact, openChat } from "../../state";
+import { TState, openChat } from "../../state";
+import { Contact } from "../../classes";
 
 export const Contacts = () => {
   const contacts: Contact[] = useSelector(

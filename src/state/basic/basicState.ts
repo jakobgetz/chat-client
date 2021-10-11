@@ -1,3 +1,5 @@
+import { Socket } from "socket.io-client";
+import { Message, Contact } from "../../classes";
 import {
   BasicAction,
   CHANGE_ID,
@@ -6,26 +8,15 @@ import {
   ADD_CONTACT,
   ADD_CONVERSATION,
   OPEN_CHAT,
+  APPEND_MESSAGE,
+  SET_SOCKET,
 } from ".";
-
-export type Message = {
-  id: string;
-  message: string;
-  timestamp: string;
-};
-
-export type Contact = {
-  name: string;
-  id: string;
-  inConversation: boolean;
-  chat?: Message[];
-  selectedToChat: boolean;
-};
 
 export type BasicState = {
   id?: string;
   activePage?: string;
   contacts?: Contact[];
+  socket?: Socket;
 };
 
 export const initialBasicState: BasicState = {};
@@ -45,7 +36,7 @@ export const basicReducer = (
         contacts: action.payload,
       };
     case ADD_CONTACT:
-      return { ...state, contact: state.contacts?.concat(action.payload) };
+      return { ...state, contacts: state.contacts?.concat(action.payload) };
     case ADD_CONVERSATION:
       return {
         ...state,
@@ -62,6 +53,17 @@ export const basicReducer = (
             : { ...contact, selectedToChat: false }
         ),
       };
+    case APPEND_MESSAGE:
+      return {
+        ...state,
+        contacts: state.contacts?.map((contact) =>
+          contact.id === action.payload.id
+            ? { ...contact, chat: contact.chat?.concat(action.payload) }
+            : contact
+        ),
+      };
+    case SET_SOCKET:
+      return { ...state, socket: action.payload };
     default:
       return state;
   }

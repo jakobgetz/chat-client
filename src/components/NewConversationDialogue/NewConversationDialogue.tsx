@@ -7,8 +7,9 @@ import {
   ListItemAvatar,
   ListItemText,
 } from "@material-ui/core";
-import { addConversation, Contact, TState } from "../../state";
+import { addConversation, TState } from "../../state";
 import { FC } from "react";
+import { Contact } from "../../classes";
 
 type Props = {
   closeDialog: () => void;

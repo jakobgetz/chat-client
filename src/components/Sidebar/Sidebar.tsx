@@ -1,10 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  CONTACTS_KEY,
-  CONVERSATIONS_KEY,
-  toggleActivePage,
-  TState,
-} from "../../state";
+import { TState } from "../../state";
 import {
   AppBar,
   Button,
@@ -16,10 +11,7 @@ import {
   Tabs,
   Typography,
   Dialog,
-  DialogTitle,
-  IconButton,
 } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import {
   Contacts,
@@ -81,7 +73,7 @@ export const Sidebar = () => {
           {activeTab === 0 ? (
             <NewConversationDialogue closeDialog={() => setDialogOpen(false)} />
           ) : (
-            <NewContactDialogue />
+            <NewContactDialogue closeDialog={() => setDialogOpen(false)} />
           )}
         </Dialog>
       )}

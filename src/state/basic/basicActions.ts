@@ -1,5 +1,5 @@
-import { v4 as uuidv4 } from "uuid"; //temporary
-import { Contact } from ".";
+import { Socket } from "socket.io-client";
+import { Contact, Message } from "../../classes";
 
 export const CHANGE_ID = "CHANGE_ID";
 export const TOGGLE_ACTIVE_PAGE = "TOGGLE_ACTIVE_PAGE";
@@ -7,6 +7,8 @@ export const LOAD_CONTACTS = "LOAD_CONTACTS";
 export const ADD_CONTACT = "ADD_CONTACT";
 export const ADD_CONVERSATION = "ADD_CONVERSATION";
 export const OPEN_CHAT = "OPEN_CHAT";
+export const APPEND_MESSAGE = "APPEND_MESSAGE";
+export const SET_SOCKET = "SET_SOCKET";
 
 export type BasicActionType =
   | "CHANGE_ID"
@@ -14,7 +16,9 @@ export type BasicActionType =
   | "LOAD_CONTACTS"
   | "ADD_CONTACT"
   | "ADD_CONVERSATION"
-  | "OPEN_CHAT";
+  | "OPEN_CHAT"
+  | "APPEND_MESSAGE"
+  | "SET_SOCKET";
 
 export type BasicAction<payload> = {
   type: BasicActionType;
@@ -40,32 +44,17 @@ export const loadContacts = (): BasicAction<Contact[]> => {
   return {
     type: LOAD_CONTACTS,
     payload: [
-      {
-        name: "Thomas",
-        id: "Thomas",
-        inConversation: false,
-        selectedToChat: false,
-      },
-      {
-        name: "Michael",
-        id: "Michael",
-        inConversation: false,
-        selectedToChat: false,
-      },
-      {
-        name: "Mike",
-        id: "Mike",
-        inConversation: false,
-        selectedToChat: false,
-      },
+      new Contact("Thomas", "Thomas"),
+      new Contact("Michael", "Michael"),
+      new Contact("Mike", "Mike"),
     ],
   };
 };
 
-export const addContact = () => {
+export const addContact = (payload: Contact) => {
   return {
     type: ADD_CONTACT,
-    payload: { name: "New", id: uuidv4(), inConversation: false },
+    payload,
   };
 };
 
@@ -84,11 +73,23 @@ export const openChat = (payload: Contact): BasicAction<Contact> => {
       ...payload,
       selectedToChat: true,
       chat: [
-        { id: payload.id, message: "hi", timestamp: "0" },
-        { id: "Thomas", message: "yo", timestamp: "1" },
-        { id: payload.id, message: "wazzup?", timestamp: "2" },
-        { id: "Thomas", message: "nothin", timestamp: "3" },
+        new Message("hi", payload.id, "ich"),
+        new Message("yo", "ich", payload.id),
+        new Message("wazzup", payload.id, "ich"),
+        new Message("nothin", "ich", payload.id),
       ],
     },
   };
 };
+
+export const appendMessage = (payload: Message): BasicAction<Message> => {
+  return {
+    type: APPEND_MESSAGE,
+    payload,
+  };
+};
+
+export const setSocket = (payload: Socket): BasicAction<Socket> => ({
+  type: SET_SOCKET,
+  payload,
+});

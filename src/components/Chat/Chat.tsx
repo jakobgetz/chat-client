@@ -1,22 +1,31 @@
+import { List, ListItem, Typography } from "@material-ui/core";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Contact, Message, TState } from "../../state";
+import { TState } from "../../state";
+import { Contact, Message } from "../../classes";
+import { useStyles } from "./styles";
+import { MessageBox } from "../";
 
 export const Chat = () => {
   const chat: Message[] = useSelector((state: TState) =>
     state.basic.contacts.filter((contact: Contact) => contact.selectedToChat)
   )[0]?.chat;
-  useEffect(() => console.log(chat), [chat]);
+  const classes = useStyles();
   return (
     <div>
-      {chat?.map((message) => (
-        <>
-          <p>{message.message}</p>
-          <p>
-            {message.id} {message.timestamp}
-          </p>
-        </>
-      ))}
+      <List>
+        {chat?.map((message) => (
+          <ListItem>
+            <div>
+              <Typography color="primary">{message.message}</Typography>
+              <Typography>
+                {message.sender} {message.timestamp}
+              </Typography>
+            </div>
+          </ListItem>
+        ))}
+      </List>
+      <MessageBox />
     </div>
   );
 };

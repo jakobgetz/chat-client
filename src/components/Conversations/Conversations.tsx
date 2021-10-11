@@ -7,7 +7,8 @@ import {
 } from "@material-ui/core";
 import ForumOutlinedIcon from "@material-ui/icons/ForumOutlined";
 import { useSelector, useDispatch } from "react-redux";
-import { Contact, TState, openChat } from "../../state";
+import { TState, openChat } from "../../state";
+import { Contact } from "../../classes";
 
 export const Conversations = () => {
   const conversations: Contact[] = (
