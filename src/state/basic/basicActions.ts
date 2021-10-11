@@ -72,12 +72,7 @@ export const openChat = (payload: Contact): BasicAction<Contact> => {
     payload: {
       ...payload,
       selectedToChat: true,
-      chat: [
-        new Message("hi", payload.id, "ich"),
-        new Message("yo", "ich", payload.id),
-        new Message("wazzup", payload.id, "ich"),
-        new Message("nothin", "ich", payload.id),
-      ],
+      chat: [],
     },
   };
 };

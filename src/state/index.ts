@@ -11,13 +11,13 @@ const reducer = combineReducers({
   basic: basicReducer,
 });
 
-const key = "whatsapp-clone-app";
+const key = "whatsapp-clone";
 const localState = localStorage.getItem(key);
 const state = localState ? JSON.parse(localState) : initialState;
 
 export const store = createStore(
   reducer,
-  initialState,
+  state,
   composeWithDevTools(applyMiddleware(thunk))
 );
 
