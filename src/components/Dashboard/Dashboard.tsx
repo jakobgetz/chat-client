@@ -1,21 +1,21 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import { Sidebar, Chat } from "../";
 import { TState, setSocket } from "../../state";
 import { useStyles } from "./styles";
 
 export const Dashboard = () => {
   const classes = useStyles();
-  const id = useSelector((state: TState) => state.basic.id);
+  const id: string = useSelector((state: TState) => state.basic.id);
+  const socket: Socket = useSelector((state: TState) => state.basic.socket);
   const dispatch = useDispatch();
 
-  //@ts-ignore
-  useEffect(() => {
-    const newSocket = io("http://localhost:5000", { query: id });
-    dispatch(setSocket(newSocket));
-    return () => newSocket.close();
-  }, [id]);
+  // useEffect(() => {
+  //   const newSocket = io("http://localhost:5000", { query: id });
+  //   dispatch(setSocket(newSocket));
+  //   return () => newSocket.close();
+  // }, [id, socket]);
 
   return (
     <div className={classes.root}>

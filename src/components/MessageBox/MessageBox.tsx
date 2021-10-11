@@ -29,14 +29,13 @@ export const MessageBox = () => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log(text)
     if (text !== "") {
       const message = new Message(
         text,
         id,
         contacts.filter((contact) => contact.selectedToChat && contact)[0].id
       );
-      socket.emit("send-message", message);
+      // socket.emit("send-message", message);
       dispatch(appendMessage(message));
       setText("");
     }
