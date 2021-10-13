@@ -1,3 +1,3 @@
 export const serverConfig = {
-  socket: "http://localhost:5000",
+  socket: "http://46.101.109.250:5000",
 };
